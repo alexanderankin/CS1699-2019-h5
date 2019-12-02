@@ -1,0 +1,660 @@
+toor@toor-Latitude-3440:~$ ssh test
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-66-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Dec  1 23:54:37 UTC 2019
+
+  System load:  0.0                Processes:             88
+  Usage of /:   13.7% of 24.06GB   Users logged in:       0
+  Memory usage: 22%                IP address for eth0:   192.241.253.189
+  Swap usage:   0%                 IP address for virbr0: 192.168.122.1
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+21 packages can be updated.
+0 updates are security updates.
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+*** System restart required ***
+Last login: Thu Nov 21 19:34:25 2019 from 150.212.127.108
+root@test:~# users
+root
+root@test:~# cat /etc/passwd | grep toor
+root@test:~# vim script
+root@test:~# adduser spark
+Adding user `spark' ...
+Adding new group `spark' (1000) ...
+Adding new user `spark' (1000) with group `spark' ...
+Creating home directory `/home/spark' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for spark
+Enter the new value, or press ENTER for the default
+  Full Name []: 
+  Room Number []: 
+  Work Phone []: 
+  Home Phone []: 
+  Other []: 
+Is the information correct? [Y/n] y
+root@test:~# usermod -aG sudo spark
+root@test:~# su spark
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+spark@test:/root$ cd
+spark@test:~$ wget http://apache.claz.org/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz
+--2019-12-01 23:56:35--  http://apache.claz.org/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz
+Resolving apache.claz.org (apache.claz.org)... 104.37.174.64
+Connecting to apache.claz.org (apache.claz.org)|104.37.174.64|:80... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2019-12-01 23:56:36 ERROR 404: Not Found.
+
+spark@test:~$ wget http://apache.claz.org/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz
+--2019-12-01 23:57:12--  http://apache.claz.org/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz
+Resolving apache.claz.org (apache.claz.org)... 104.37.174.64
+Connecting to apache.claz.org (apache.claz.org)|104.37.174.64|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 230091034 (219M) [application/x-gzip]
+Saving to: ‘spark-2.4.4-bin-hadoop2.7.tgz’
+
+spark-2.4.4-bin-had 100%[===================>] 219.43M  1.36MB/s    in 3m 2s   
+
+2019-12-02 00:00:14 (1.21 MB/s) - ‘spark-2.4.4-bin-hadoop2.7.tgz’ saved [230091034/230091034]
+
+spark@test:~$ tar -xvf spark-2.4.4-bin-hadoop2.7.tgz 
+spark-2.4.4-bin-hadoop2.7/
+spark-2.4.4-bin-hadoop2.7/R/
+spark-2.4.4-bin-hadoop2.7/R/lib/
+spark-2.4.4-bin-hadoop2.7/R/lib/sparkr.zip
+....
+spark-2.4.4-bin-hadoop2.7/jars/jackson-module-paranamer-2.7.9.jar
+spark-2.4.4-bin-hadoop2.7/jars/jackson-module-jaxb-annotations-2.6.7.jar
+spark-2.4.4-bin-hadoop2.7/RELEASE
+spark@test:~$ sudo mv spark-2.4.4-bin-hadoop2.7 /usr/local
+[sudo] password for spark: 
+spark@test:~$ sudo ln -s /usr/local/spark-2.4.4-bin-hadoop2.7/ /usr/local/spark
+spark@test:~$ vim .profile 
+spark@test:~$ . ./.profile 
+spark@test:~$ java -version
+
+Command 'java' not found, but can be installed with:
+
+sudo apt install default-jre            
+sudo apt install openjdk-11-jre-headless
+sudo apt install openjdk-8-jre-headless 
+
+spark@test:~$ sudo add-apt-repository ppa:webupd8team/java
+ The Oracle JDK License has changed for releases starting April 16, 2019.
+
+The new Oracle Technology Network License Agreement for Oracle Java SE is substantially different from prior Oracle JDK licenses. The new license permits certain uses, such as personal use and development use, at no cost -- but other uses authorized under prior Oracle JDK licenses may no longer be available. Please review the terms carefully before downloading and using this product. An FAQ is available here: https://www.oracle.com/technetwork/java/javase/overview/oracle-jdk-faqs.html
+
+Oracle Java downloads now require logging in to an Oracle account to download Java updates, like the latest Oracle Java 8u211 / Java SE 8u212. Because of this I cannot update the PPA with the latest Java (and the old links were broken by Oracle).
+
+For this reason, THIS PPA IS DISCONTINUED (unless I find some way around this limitation).
+
+Oracle Java (JDK) Installer (automatically downloads and installs Oracle JDK8). There are no actual Java files in this PPA.
+
+Important -> Why Oracle Java 7 And 6 Installers No Longer Work: http://www.webupd8.org/2017/06/why-oracle-java-7-and-6-installers-no.html
+
+Update: Oracle Java 9 has reached end of life: http://www.oracle.com/technetwork/java/javase/downloads/jdk9-downloads-3848520.html
+
+The PPA supports Ubuntu 18.10, 18.04, 16.04, 14.04 and 12.04.
+
+More info (and Ubuntu installation instructions):
+- http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html
+
+Debian installation instructions:
+- Oracle Java 8: http://www.webupd8.org/2014/03/how-to-install-oracle-java-8-in-debian.html
+
+For Oracle Java 11, see a different PPA -> https://www.linuxuprising.com/2019/06/new-oracle-java-11-installer-for-ubuntu.html
+ More info: https://launchpad.net/~webupd8team/+archive/ubuntu/java
+Press [ENTER] to continue or Ctrl-c to cancel adding it.
+
+Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Get:2 http://mirrors.digitalocean.com/ubuntu bionic InRelease [242 kB]         
+Get:3 http://ppa.launchpad.net/webupd8team/java/ubuntu bionic InRelease [15.4 kB]
+Get:4 http://mirrors.digitalocean.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:5 http://mirrors.digitalocean.com/ubuntu bionic-backports InRelease [74.6 kB]
+Fetched 509 kB in 1s (642 kB/s)                               
+Reading package lists... Done
+spark@test:~$ sudo apt-get update
+Hit:1 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Hit:2 http://ppa.launchpad.net/webupd8team/java/ubuntu bionic InRelease        
+Err:3 http://mirrors.digitalocean.com/ubuntu bionic InRelease                  
+  520  Origin Error [IP: 104.24.116.209 80]
+Hit:4 http://mirrors.digitalocean.com/ubuntu bionic-updates InRelease
+Hit:5 http://mirrors.digitalocean.com/ubuntu bionic-backports InRelease
+Reading package lists... Done                      
+E: Failed to fetch http://mirrors.digitalocean.com/ubuntu/dists/bionic/InRelease  520  Origin Error [IP: 104.24.116.209 80]
+E: The repository 'http://mirrors.digitalocean.com/ubuntu bionic InRelease' is no longer signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+spark@test:~$ sudo apt install oracle-java8-installer
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Package oracle-java8-installer is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Package 'oracle-java8-installer' has no installation candidate
+spark@test:~$ sudo apt-get install open
+Display all 357 possibilities? (y or n)
+spark@test:~$ sudo apt-get install openj
+openjade                 openjdk-11-jdk-headless  openjdk-11-source        openjdk-8-jdk-headless   openjdk-8-source
+openjdk-11-dbg           openjdk-11-jre           openjdk-8-dbg            openjdk-8-jre            openjfx
+openjdk-11-demo          openjdk-11-jre-dcevm     openjdk-8-demo           openjdk-8-jre-dcevm      openjfx-source
+openjdk-11-doc           openjdk-11-jre-headless  openjdk-8-doc            openjdk-8-jre-headless   
+openjdk-11-jdk           openjdk-11-jre-zero      openjdk-8-jdk            openjdk-8-jre-zero       
+spark@test:~$ sudo apt-get install openjdk-8-
+openjdk-8-dbg           openjdk-8-doc           openjdk-8-jdk-headless  openjdk-8-jre-dcevm     openjdk-8-jre-zero
+openjdk-8-demo          openjdk-8-jdk           openjdk-8-jre           openjdk-8-jre-headless  openjdk-8-source
+spark@test:~$ sudo apt-get install openjdk-8-jre
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  grub-pc-bin
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  ca-certificates-java fonts-dejavu-extra java-common libatk-wrapper-java libatk-wrapper-java-jni libdrm-amdgpu1 libdrm-intel1
+  libdrm-nouveau2 libdrm-radeon1 libfontenc1 libgail-common libgail18 libgif7 libgl1 libgl1-mesa-dri libgl1-mesa-glx libglapi-mesa
+  libglvnd0 libglx-mesa0 libglx0 libgtk2.0-0 libgtk2.0-bin libgtk2.0-common libice6 libllvm8 libpcsclite1 libsensors4 libsm6
+  libx11-xcb1 libxaw7 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-shape0 libxcb-sync1 libxmu6 libxpm4
+  libxshmfence1 libxt6 libxxf86dga1 libxxf86vm1 openjdk-8-jre-headless x11-utils
+Suggested packages:
+  default-jre gvfs pcscd lm-sensors icedtea-8-plugin libnss-mdns fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei
+  fonts-wqy-zenhei fonts-indic mesa-utils
+The following NEW packages will be installed:
+  ca-certificates-java fonts-dejavu-extra java-common libatk-wrapper-java libatk-wrapper-java-jni libdrm-amdgpu1 libdrm-intel1
+  libdrm-nouveau2 libdrm-radeon1 libfontenc1 libgail-common libgail18 libgif7 libgl1 libgl1-mesa-dri libgl1-mesa-glx libglapi-mesa
+  libglvnd0 libglx-mesa0 libglx0 libgtk2.0-0 libgtk2.0-bin libgtk2.0-common libice6 libllvm8 libpcsclite1 libsensors4 libsm6
+  libx11-xcb1 libxaw7 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-shape0 libxcb-sync1 libxmu6 libxpm4
+  libxshmfence1 libxt6 libxxf86dga1 libxxf86vm1 openjdk-8-jre openjdk-8-jre-headless x11-utils
+0 upgraded, 45 newly installed, 0 to remove and 21 not upgraded.
+Need to get 53.3 MB of archives.
+After this operation, 337 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://mirrors.digitalocean.com/ubuntu bionic/main amd64 libice6 amd64 2:1.0.9-2 [40.2 kB]
+Get:2 http://mirrors.digitalocean.com/ubuntu bionic/main amd64 libsm6 amd64 2:1.2.2-1 [15.8 kB]
+...
+Selecting previously unselected package x11-utils.
+Preparing to unpack .../35-x11-utils_7.7+3build1_amd64.deb ...
+Unpacking x11-utils (7.7+3build1) ...
+Selecting previously unselected package libatk-wrapper-java.
+Preparing to unpack .../36-libatk-wrapper-java_0.33.3-20ubuntu0.1_all.deb ...
+Unpacking libatk-wrapper-java (0.33.3-20ubuntu0.1) ...
+Selecting previously unselected package libatk-wrapper-java-jni:amd64.
+Preparing to unpack .../37-libatk-wrapper-java-jni_0.33.3-20ubuntu0.1_amd64.deb ...
+Unpacking libatk-wrapper-java-jni:amd64 (0.33.3-20ubuntu0.1) ...
+Selecting previously unselected package libgtk2.0-common.
+...
+Setting up libxaw7:amd64 (2:1.0.13-1) ...
+Setting up libgl1:amd64 (1.0.0-2ubuntu2.3) ...
+Setting up x11-utils (7.7+3build1) ...
+Setting up libgl1-mesa-glx:amd64 (19.0.8-0ubuntu0~18.04.3) ...
+Setting up libatk-wrapper-java (0.33.3-20ubuntu0.1) ...
+Setting up libatk-wrapper-java-jni:amd64 (0.33.3-20ubuntu0.1) ...
+Setting up ca-certificates-java (20180516ubuntu1~18.04.1) ...
+head: cannot open '/etc/ssl/certs/java/cacerts' for reading: No such file or directory
+Adding debian:SwissSign_Gold_CA_-_G2.pem
+Adding debian:DST_Root_CA_X3.pem
+Adding debian:AffirmTrust_Commercial.pem
+...
+Adding debian:Atos_TrustedRoot_2011.pem
+Adding debian:TrustCor_RootCert_CA-1.pem
+done.
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for ca-certificates (20180409) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+
+done.
+done.
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+Processing triggers for fontconfig (2.12.6-0ubuntu2) ...
+Setting up openjdk-8-jre-headless:amd64 (8u222-b10-1ubuntu1~18.04.1) ...
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/rmid to provide /usr/bin/rmid (rmid) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/hsdb to provide /usr/bin/hsdb (hsdb) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java to provide /usr/bin/java (java) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/clhsdb to provide /usr/bin/clhsdb (clhsdb) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/keytool to provide /usr/bin/keytool (keytool) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/jjs to provide /usr/bin/jjs (jjs) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/pack200 to provide /usr/bin/pack200 (pack200) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/rmiregistry to provide /usr/bin/rmiregistry (rmiregistry) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/unpack200 to provide /usr/bin/unpack200 (unpack200) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/orbd to provide /usr/bin/orbd (orbd) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/servertool to provide /usr/bin/servertool (servertool) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/tnameserv to provide /usr/bin/tnameserv (tnameserv) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jexec to provide /usr/bin/jexec (jexec) in auto mode
+Processing triggers for mime-support (3.60ubuntu1) ...
+Setting up openjdk-8-jre:amd64 (8u222-b10-1ubuntu1~18.04.1) ...
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/policytool to provide /usr/bin/policytool (policytool) in auto mode
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+spark@test:~$ vim .profile 
+spark@test:~$ . .profile 
+spark@test:~$ spark-shell 
+19/12/02 00:04:30 WARN Utils: Your hostname, test resolves to a loopback address: 127.0.1.1; using 10.13.0.6 instead (on interface eth0)
+19/12/02 00:04:30 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+19/12/02 00:04:31 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Spark context Web UI available at http://10.13.0.6:4040
+Spark context available as 'sc' (master = local[*], app id = local-1575245097141).
+Spark session available as 'spark'.
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 2.4.4
+      /_/
+         
+Using Scala version 2.11.12 (OpenJDK 64-Bit Server VM, Java 1.8.0_222)
+Type in expressions to have them evaluated.
+Type :help for more information.
+
+scala> :quit
+spark@test:~$ spark-shell 
+19/12/02 00:05:17 WARN Utils: Your hostname, test resolves to a loopback address: 127.0.1.1; using 10.13.0.6 instead (on interface eth0)
+19/12/02 00:05:17 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+19/12/02 00:05:18 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Spark context Web UI available at http://10.13.0.6:4040
+Spark context available as 'sc' (master = local[*], app id = local-1575245143009).
+Spark session available as 'spark'.
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 2.4.4
+      /_/
+         
+Using Scala version 2.11.12 (OpenJDK 64-Bit Server VM, Java 1.8.0_222)
+Type in expressions to have them evaluated.
+Type :help for more information.
+
+scala> :quit
+spark@test:~$ sp
+spark-class                     spark-submit                    spice-xpi-client-remote-viewer  splitfont
+spark-shell                     sparkR                          splain                          
+spark-sql                       spice-xpi-client                split                           
+spark@test:~$ spark
+spark-class   spark-shell   spark-sql     spark-submit  sparkR        
+spark@test:~$ spark-
+
+Command 'spark-' not found, did you mean:
+
+  command 'sparky' from snap sparky (1.0)
+  command 'spark' from deb spark
+
+See 'snap info <snapname>' for additional versions.
+
+spark@test:~$ 
+spark@test:~$ spark-shell 
+19/12/02 00:11:40 WARN Utils: Your hostname, test resolves to a loopback address: 127.0.1.1; using 10.13.0.6 instead (on interface eth0)
+19/12/02 00:11:40 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+19/12/02 00:11:41 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Spark context Web UI available at http://10.13.0.6:4040
+Spark context available as 'sc' (master = local[*], app id = local-1575245525464).
+Spark session available as 'spark'.
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 2.4.4
+      /_/
+         
+Using Scala version 2.11.12 (OpenJDK 64-Bit Server VM, Java 1.8.0_222)
+Type in expressions to have them evaluated.
+Type :help for more information.
+
+scala> 
+[1]+  Stopped                 spark-shell
+spark@test:~$ wget https://raw.githubusercontent.com/alexanderankin/CS1699-2019-WordCount-H3/master/gen_inputs.sh
+--2019-12-02 00:12:53--  https://raw.githubusercontent.com/alexanderankin/CS1699-2019-WordCount-H3/master/gen_inputs.sh
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 199.232.36.133
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|199.232.36.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 793 [text/plain]
+Saving to: ‘gen_inputs.sh’
+
+gen_inputs.sh                                    100%[=======================================================================================================>]     793  --.-KB/s    in 0s      
+
+2019-12-02 00:12:53 (19.6 MB/s) - ‘gen_inputs.sh’ saved [793/793]
+
+spark@test:~$ chmod +x gen_inputs.sh 
+spark@test:~$ ./gen_inputs.sh 
+found python
+missing pip
+spark@test:~$ sudo apt-get install python-pip
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  grub-pc-bin
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu build-essential cpp cpp-7 dpkg-dev fakeroot g++ g++-7 gcc gcc-7 gcc-7-base libalgorithm-diff-perl libalgorithm-diff-xs-perl
+  libalgorithm-merge-perl libasan4 libatomic1 libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libexpat1-dev libfakeroot libfile-fcntllock-perl libgcc-7-dev libgomp1
+  libisl19 libitm1 liblsan0 libmpc3 libmpx2 libpython-all-dev libpython-dev libpython2.7-dev libquadmath0 libstdc++-7-dev libtsan0 libubsan0 linux-libc-dev make manpages-dev python-all
+  python-all-dev python-crypto python-dev python-keyring python-keyrings.alt python-pip-whl python-secretstorage python-setuptools python-wheel python-xdg python2.7-dev
+Suggested packages:
+  binutils-doc cpp-doc gcc-7-locales debian-keyring g++-multilib g++-7-multilib gcc-7-doc libstdc++6-7-dbg gcc-multilib autoconf automake libtool flex bison gdb gcc-doc gcc-7-multilib
+  libgcc1-dbg libgomp1-dbg libitm1-dbg libatomic1-dbg libasan4-dbg liblsan0-dbg libtsan0-dbg libubsan0-dbg libcilkrts5-dbg libmpx2-dbg libquadmath0-dbg glibc-doc bzr libstdc++-7-doc make-doc
+  python-crypto-doc gnome-keyring libkf5wallet-bin gir1.2-gnomekeyring-1.0 python-fs python-gdata python-keyczar python-secretstorage-doc python-setuptools-doc
+The following NEW packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu build-essential cpp cpp-7 dpkg-dev fakeroot g++ g++-7 gcc gcc-7 gcc-7-base libalgorithm-diff-perl libalgorithm-diff-xs-perl
+  libalgorithm-merge-perl libasan4 libatomic1 libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libexpat1-dev libfakeroot libfile-fcntllock-perl libgcc-7-dev libgomp1
+  libisl19 libitm1 liblsan0 libmpc3 libmpx2 libpython-all-dev libpython-dev libpython2.7-dev libquadmath0 libstdc++-7-dev libtsan0 libubsan0 linux-libc-dev make manpages-dev python-all
+  python-all-dev python-crypto python-dev python-keyring python-keyrings.alt python-pip python-pip-whl python-secretstorage python-setuptools python-wheel python-xdg python2.7-dev
+0 upgraded, 57 newly installed, 0 to remove and 21 not upgraded.
+Need to get 68.4 MB of archives.
+After this operation, 210 MB of additional disk space will be used.
+Do you want to continue? [Y/n] ^C
+spark@test:~$ sudo apt-get install python-pip -y -q
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following package was automatically installed and is no longer required:
+  grub-pc-bin
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu build-essential cpp cpp-7 dpkg-dev fakeroot g++ g++-7 gcc gcc-7 gcc-7-base libalgorithm-diff-perl libalgorithm-diff-xs-perl
+  libalgorithm-merge-perl libasan4 libatomic1 libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libexpat1-dev libfakeroot libfile-fcntllock-perl libgcc-7-dev libgomp1
+  libisl19 libitm1 liblsan0 libmpc3 libmpx2 libpython-all-dev libpython-dev libpython2.7-dev libquadmath0 libstdc++-7-dev libtsan0 libubsan0 linux-libc-dev make manpages-dev python-all
+  python-all-dev python-crypto python-dev python-keyring python-keyrings.alt python-pip-whl python-secretstorage python-setuptools python-wheel python-xdg python2.7-dev
+Suggested packages:
+  binutils-doc cpp-doc gcc-7-locales debian-keyring g++-multilib g++-7-multilib gcc-7-doc libstdc++6-7-dbg gcc-multilib autoconf automake libtool flex bison gdb gcc-doc gcc-7-multilib
+  libgcc1-dbg libgomp1-dbg libitm1-dbg libatomic1-dbg libasan4-dbg liblsan0-dbg libtsan0-dbg libubsan0-dbg libcilkrts5-dbg libmpx2-dbg libquadmath0-dbg glibc-doc bzr libstdc++-7-doc make-doc
+  python-crypto-doc gnome-keyring libkf5wallet-bin gir1.2-gnomekeyring-1.0 python-fs python-gdata python-keyczar python-secretstorage-doc python-setuptools-doc
+The following NEW packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu build-essential cpp cpp-7 dpkg-dev fakeroot g++ g++-7 gcc gcc-7 gcc-7-base libalgorithm-diff-perl libalgorithm-diff-xs-perl
+  libalgorithm-merge-perl libasan4 libatomic1 libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libexpat1-dev libfakeroot libfile-fcntllock-perl libgcc-7-dev libgomp1
+  libisl19 libitm1 liblsan0 libmpc3 libmpx2 libpython-all-dev libpython-dev libpython2.7-dev libquadmath0 libstdc++-7-dev libtsan0 libubsan0 linux-libc-dev make manpages-dev python-all
+  python-all-dev python-crypto python-dev python-keyring python-keyrings.alt python-pip python-pip-whl python-secretstorage python-setuptools python-wheel python-xdg python2.7-dev
+0 upgraded, 57 newly installed, 0 to remove and 21 not upgraded.
+Need to get 68.4 MB of archives.
+After this operation, 210 MB of additional disk space will be used.
+Get:1 http://mirrors.digitalocean.com/ubuntu bionic-updates/main amd64 binutils-common amd64 2.30-21ubuntu1~18.04.2 [193 kB]
+....
+Setting up gcc (4:7.4.0-1ubuntu2.3) ...
+Setting up dpkg-dev (1.19.0.5ubuntu2.3) ...
+Setting up g++ (4:7.4.0-1ubuntu2.3) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+Setting up build-essential (12.4ubuntu1) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+spark@test:~$ sudo pip install virtualenv
+The directory '/home/spark/.cache/pip/http' or its parent directory is not owned by the current user and the cache has been disabled. Please check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
+The directory '/home/spark/.cache/pip' or its parent directory is not owned by the current user and caching wheels has been disabled. check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
+Collecting virtualenv
+  Downloading https://files.pythonhosted.org/packages/62/77/6a86ef945ad39aae34aed4cc1ae4a2f941b9870917a974ed7c5b6f137188/virtualenv-16.7.8-py2.py3-none-any.whl (3.4MB)
+    100% |████████████████████████████████| 3.4MB 238kB/s 
+Installing collected packages: virtualenv
+Successfully installed virtualenv-16.7.8
+spark@test:~$ ./gen_inputs.sh 
+found python
+found pip
+found virtualenv
+New python executable in /home/spark/env/bin/python
+Installing setuptools, pip, wheel...
+done.
+DEPRECATION: Python 2.7 will reach the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 won't be maintained after that date. A future version of pip will drop support for Python 2.7. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support
+Collecting lorem
+  Downloading https://files.pythonhosted.org/packages/3a/ae/6a5d8faaec3bc847ae1999e760f76c7238cefd99452e040e4aea5f723738/lorem-0.1.1.tar.gz
+Building wheels for collected packages: lorem
+  Building wheel for lorem (setup.py) ... done
+  Created wheel for lorem: filename=lorem-0.1.1-cp27-none-any.whl size=4355 sha256=22183af77d7aaca587b5b3b32980309507093f1f45d4201b90e02a0825ecc219
+  Stored in directory: /home/spark/.cache/pip/wheels/3b/e3/12/be939c1dd732c017ad56789f842518788bab7672f108fe3205
+Successfully built lorem
+Installing collected packages: lorem
+Successfully installed lorem-0.1.1
+spark@test:~$ vim gen_inputs.sh 
+spark@test:~$ ./gen_inputs.sh 
+found python
+found pip
+found virtualenv
+spark@test:~$ fg
+spark-shell
+19/12/02 00:16:40 WARN HeartbeatReceiver: Removing executor driver with no recent heartbeats: 274150 ms exceeds timeout 120000 ms
+19/12/02 00:16:40 ERROR TaskSchedulerImpl: Lost an executor driver (already removed): Executor heartbeat timed out after 274150 ms
+19/12/02 00:16:40 WARN SparkContext: Killing executors is not supported by current scheduler.
+scala> source script
+source script
+<console>:24: error: not found: value source
+       source script
+       ^
+
+scala> . script
+. script
+<console>:25: error: value script is not a member of org.apache.spark.SparkContext
+       sc. script
+           ^
+
+scala> .help
+.help
+<console>:25: error: value help is not a member of org.apache.spark.SparkContext
+       sc.help
+          ^
+
+scala> \?
+\?
+<console>:24: error: not found: value \?
+       \?
+       ^
+
+scala> :help
+:help
+All commands can be abbreviated, e.g., :he instead of :help.
+:edit <id>|<line>        edit history
+:help [command]          print this summary or command-specific help
+:history [num]           show the history (optional num is commands to show)
+:h? <string>             search the history
+:imports [name name ...] show import history, identifying sources of names
+:implicits [-v]          show the implicits in scope
+:javap <path|class>      disassemble a file or class name
+:line <id>|<line>        place line(s) at the end of history
+:load <path>             interpret lines in a file
+:paste [-raw] [path]     enter paste mode or paste a file
+:power                   enable power user mode
+:quit                    exit the interpreter
+:replay [options]        reset the repl and replay all previous commands
+:require <path>          add a jar to the classpath
+:reset [options]         reset the repl to its initial state, forgetting all session entries
+:save <path>             save replayable session to a file
+:sh <command line>       run a shell command (result is implicitly => List[String])
+:settings <options>      update compiler options, if possible; see reset
+:silent                  disable/enable automatic printing of results
+:type [-v] <expr>        display the type of an expression without evaluating it
+:kind [-v] <expr>        display the kind of expression's type
+:warnings                show the suppressed warnings from the most recent line which had any
+
+scala> :sh script
+:sh script
+
+^Cres4: scala.tools.nsc.interpreter.ProcessResult = `script` (5 lines, exit 0)
+
+scala> spark@test:~$ :load script
+
+Command ':load' not found, did you mean:
+
+  command 'nload' from deb nload
+  command 'xload' from deb x11-apps
+  command 'tload' from deb procps
+
+Try: sudo apt install <deb name>
+
+spark@test:~$ spark-shell 
+19/12/02 00:19:30 WARN Utils: Your hostname, test resolves to a loopback address: 127.0.1.1; using 10.13.0.6 instead (on interface eth0)
+19/12/02 00:19:30 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+19/12/02 00:19:31 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Spark context Web UI available at http://10.13.0.6:4040
+Spark context available as 'sc' (master = local[*], app id = local-1575245995498).
+Spark session available as 'spark'.
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 2.4.4
+      /_/
+         
+Using Scala version 2.11.12 (OpenJDK 64-Bit Server VM, Java 1.8.0_222)
+Type in expressions to have them evaluated.
+Type :help for more information.
+
+scala> :load script
+Loading script...
+textFile: org.apache.spark.rdd.RDD[String] = input1.txt MapPartitionsRDD[1] at textFile at script:24
+counts: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[2] at flatMap at script:25
+script:1: error: illegal start of definition
+                 .map(word => (word, 1))
+                 ^
+script:1: error: illegal start of definition
+                 .reduceByKey(_ + _)
+                 ^
+                                                                                
+scala> :load script
+Loading script...
+textFile: org.apache.spark.rdd.RDD[String] = input1.txt MapPartitionsRDD[5] at textFile at script:24
+counts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[8] at reduceByKey at script:25
+org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory file:/home/spark/output1.txt already exists
+  at org.apache.hadoop.mapred.FileOutputFormat.checkOutputSpecs(FileOutputFormat.java:131)
+  at org.apache.spark.internal.io.HadoopMapRedWriteConfigUtil.assertConf(SparkHadoopWriter.scala:289)
+  at org.apache.spark.internal.io.SparkHadoopWriter$.write(SparkHadoopWriter.scala:71)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1.apply$mcV$sp(PairRDDFunctions.scala:1096)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1.apply(PairRDDFunctions.scala:1094)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1.apply(PairRDDFunctions.scala:1094)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+  at org.apache.spark.rdd.RDD.withScope(RDD.scala:363)
+  at org.apache.spark.rdd.PairRDDFunctions.saveAsHadoopDataset(PairRDDFunctions.scala:1094)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$4.apply$mcV$sp(PairRDDFunctions.scala:1067)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$4.apply(PairRDDFunctions.scala:1032)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$4.apply(PairRDDFunctions.scala:1032)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+  at org.apache.spark.rdd.RDD.withScope(RDD.scala:363)
+  at org.apache.spark.rdd.PairRDDFunctions.saveAsHadoopFile(PairRDDFunctions.scala:1032)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$1.apply$mcV$sp(PairRDDFunctions.scala:958)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$1.apply(PairRDDFunctions.scala:958)
+  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$1.apply(PairRDDFunctions.scala:958)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+  at org.apache.spark.rdd.RDD.withScope(RDD.scala:363)
+  at org.apache.spark.rdd.PairRDDFunctions.saveAsHadoopFile(PairRDDFunctions.scala:957)
+  at org.apache.spark.rdd.RDD$$anonfun$saveAsTextFile$1.apply$mcV$sp(RDD.scala:1499)
+  at org.apache.spark.rdd.RDD$$anonfun$saveAsTextFile$1.apply(RDD.scala:1478)
+  at org.apache.spark.rdd.RDD$$anonfun$saveAsTextFile$1.apply(RDD.scala:1478)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+  at org.apache.spark.rdd.RDD.withScope(RDD.scala:363)
+  at org.apache.spark.rdd.RDD.saveAsTextFile(RDD.scala:1478)
+  ... 76 elided
+
+scala> :load script
+Loading script...
+textFile: org.apache.spark.rdd.RDD[String] = input1.txt MapPartitionsRDD[11] at textFile at script:24
+counts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[14] at reduceByKey at script:25
+                                                                                
+scala> spark@test:~$ cat output1.txt/*
+(Est,41508)
+(Eius,41563)
+(Sed,41841)
+(neque,166888)
+(adipisci.,41584)
+(Velit,41903)
+(dolor.,41675)
+(velit.,41240)
+(aliquam.,41926)
+(sed.,41713)
+(numquam.,41513)
+(eius.,41798)
+(dolorem,166388)
+(quisquam.,41726)
+(Porro,41383)
+(Tempora,41973)
+(Quisquam,41737)
+(Dolor,41647)
+(dolor,166961)
+(est,166453)
+(Sit,41478)
+(tempora,166519)
+(Neque,41333)
+(tempora.,41464)
+(Adipisci,41667)
+(porro,167678)
+(numquam,165797)
+(adipisci,166505)
+(quisquam,166671)
+(ipsum.,41356)
+(velit,166613)
+(Aliquam,41398)
+(aliquam,166609)
+(Dolorem,41642)
+(Numquam,41812)
+(porro.,41864)
+(sit,166741)
+(sit.,41506)
+(dolorem.,41668)
+(Ipsum,41347)
+(sed,167112)
+(neque.,41478)
+(eius,166392)
+(est.,41884)
+(ipsum,166206)
+(Modi,41521)
+(voluptatem.,41704)
+(Quiquia,41666)
+(Magnam,41806)
+(consectetur.,41695)
+(magnam,166770)
+(Consectetur,41742)
+(Ut,41684)
+(consectetur,166210)
+(Etincidunt,41816)
+(non,166870)
+(quaerat.,42060)
+(Quaerat,42323)
+(dolore.,41811)
+(magnam.,41751)
+(amet.,41776)
+(Labore,41586)
+(quiquia.,41777)
+(etincidunt,166553)
+(voluptatem,166980)
+(Amet,41225)
+(etincidunt.,41868)
+(ut.,41598)
+(quiquia,166554)
+(ut,166710)
+(modi.,41796)
+(labore,166764)
+(quaerat,166740)
+(labore.,41615)
+(Non,41809)
+(non.,41437)
+(Voluptatem,42064)
+(dolore,166514)
+(amet,166830)
+(Dolore,41809)
+(modi,166618)
